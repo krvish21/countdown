@@ -1,132 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>1 Month Anniversary Countdown</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&family=Sacramento&display=swap" rel="stylesheet">
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(to bottom, #fceabb, #f8cdda);
-            font-family: 'Roboto', sans-serif;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .container {
-            text-align: center;
-            color: #333;
-        }
-
-        .header-message {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            font-family: 'Sacramento', cursive;
-            color: #ff69b4;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .countdown {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            font-family: 'Sacramento', cursive;
-            color: #ff69b4;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .message {
-            display: none;
-            font-size: 2.5rem;
-            font-family: 'Sacramento', cursive;
-            color: #ff69b4;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-            margin-top: 1rem;
-        }
-
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #ffeb3b;
-            border-radius: 50%;
-            pointer-events: none;
-            animation: confetti 5s ease-out infinite;
-        }
-
-        @keyframes confetti {
-            0% {
-                transform: translateY(-100vh) rotate(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown App</title>
 </head>
 <body>
-    <div class="container">
-        <div class="header-message">Vish ❤️ Sabaa</div>
-        <div id="countdown" class="countdown">Loading...</div>
-        <div id="message" class="message">Happy 1 Month!</div>
-    </div>
+    <h1>Countdown Timer</h1>
+    <p id="countdown"></p>
 
-    <script>
-        function startCountdown(targetDate) {
-            const countdownElement = document.getElementById('countdown');
-            const messageElement = document.getElementById('message');
-
-            function updateCountdown() {
-                const now = new Date();
-                const timeRemaining = targetDate - now;
-
-                if (timeRemaining <= 0) {
-                    countdownElement.style.display = 'none';
-                    showMessage();
-                    return;
-                }
-
-                const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-                countdownElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }
-
-            function showMessage() {
-                messageElement.style.display = 'block';
-                createConfetti();
-            }
-
-            function createConfetti() {
-                const numConfetti = 150;
-                for (let i = 0; i < numConfetti; i++) {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + 'vw';
-                    confetti.style.top = Math.random() * -100 + 'vh';
-                    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
-                    confetti.style.width = Math.random() * 15 + 5 + 'px';
-                    confetti.style.height = confetti.style.width;
-                    document.body.appendChild(confetti);
-                }
-            }
-
-            // Update countdown every second
-            setInterval(updateCountdown, 1000);
-        }
-
-        // Set target date to midnight tonight
-        const now = new Date();
-        const targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0); // Midnight tonight
-
-        startCountdown(targetDate);
-    </script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
