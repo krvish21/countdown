@@ -28,10 +28,10 @@
       const app = initializeApp(firebaseConfig);
       const database = getDatabase(app);
 
-      // Function to calculate days from today
+      // Function to calculate days from a specific start date
       function calculateDays() {
           const today = new Date();
-          const startDate = new Date(); // Change this to your specific start date if needed
+          const startDate = new Date("2023-01-01"); // Set your specific start date here
           const timeDifference = today - startDate;
           const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
           return daysDifference;
@@ -39,26 +39,32 @@
 
       // Function to update the countdown in the Firebase database
       function updateDatabase(days) {
-          set(ref(database, 'days_since_meeting'), days);
+          set(ref(database, 'days_since_meeting'), days)
+              .then(() => {
+                  console.log('Data saved successfully!');
+              })
+              .catch((error) => {
+                  console.error('Error saving data:', error);
+              });
       }
 
       function fetchDaysFromDatabase() {
           const dbRef = ref(database);
           get(child(dbRef, 'days_since_meeting')).then((snapshot) => {
               if (snapshot.exists()) {
-                  console.log(snapshot.val());
+                  console.log('Fetched data:', snapshot.val());
+                  document.getElementById('countdown').innerText = `Days since start: ${snapshot.val()}`;
               } else {
                   console.log("No data available");
               }
           }).catch((error) => {
-              console.error(error);
+              console.error('Error fetching data:', error);
           });
       }
 
       // Function to display the countdown
       function displayCountdown() {
           const days = calculateDays();
-          document.getElementById('countdown').innerText = `Days since start: ${days}`;
           updateDatabase(days);
           fetchDaysFromDatabase();
       }
