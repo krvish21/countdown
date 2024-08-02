@@ -50,6 +50,7 @@
 
       // Function to display the countdown
       function displayCountdown() {
+        console.log('called')
           const days = calculateDays();
           document.getElementById('countdown').innerText = `Days since start: ${days}`;
           updateDatabase(days);
