@@ -39,12 +39,12 @@
 
       // Function to update the countdown in the Firebase database
       function updateDatabase(days) {
-          set(ref(database, 'countdown/days_since_meeting'), days);
+          set(ref(database, 'days_since_meeting'), days);
       }
 
       function fetchDaysFromDatabase() {
           const dbRef = ref(database);
-          get(child(dbRef, 'countdown/days_since_meeting')).then((snapshot) => {
+          get(child(dbRef, 'days_since_meeting')).then((snapshot) => {
               if (snapshot.exists()) {
                   console.log(snapshot.val());
               } else {
